@@ -1,23 +1,23 @@
 from flask import Flask, jsonify
-from apscheduler.schedulers.background import BackgroundScheduler
+from flask_caching import Cache
+
 import data_fetch
 
-fetcher = data_fetch.VelocityVersionFetcher()
-
-scheduler = BackgroundScheduler()
-scheduler.add_job(fetcher.fetch_data, "interval", minutes=1)
-scheduler.start()
-
 app = Flask(__name__)
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+cache.init_app(app)
 
 
 @app.route('/')
+@cache.cached(timeout=120)  # 2 minute cache should be fine
 def index():
+    fetcher = data_fetch.VelocityVersionFetcher()
     return jsonify(
         versions=fetcher.versions,
         latest_version=fetcher.latest_version,
         latest_release=fetcher.latest_release,
-        stable_versions=fetcher.stable_versions
+        stable_versions=fetcher.stable_versions,
+        error=fetcher.errored
     )
 
 

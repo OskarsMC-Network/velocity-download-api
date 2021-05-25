@@ -1,6 +1,6 @@
-from bs4 import BeautifulSoup
 import urllib3
-import semver
+from bs4 import BeautifulSoup
+
 
 class VelocityVersionFetcher:
     def __init__(self, perform_initial_fetch: bool = True, url: str = 'https://nexus.velocitypowered.com/repository'
@@ -12,6 +12,7 @@ class VelocityVersionFetcher:
         self.stable_versions = []
         self.latest_version = None
         self.latest_release = None
+        self.errored = False
 
         self.http = urllib3.PoolManager()
 
@@ -38,5 +39,6 @@ class VelocityVersionFetcher:
 
             self.latest_version = str(parsed_xml.metadata.versioning.latest.text)
             self.latest_release = str(parsed_xml.metadata.versioning.release.text)
+            self.errored = False
         else:
-            raise Exception("not a 200!")
+            self.errored = True
