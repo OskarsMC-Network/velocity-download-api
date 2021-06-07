@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 
 
 class VelocityVersionFetcher:
+    # TODO: Fix default url when tux migrates to reposilite
     def __init__(self, perform_initial_fetch: bool = True, url: str = 'https://nexus.velocitypowered.com/repository'
                                                                       '/maven-public/com/velocitypowered/velocity'
                                                                       '-native/maven-metadata.xml'):
