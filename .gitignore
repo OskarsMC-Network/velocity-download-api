@@ -154,6 +154,7 @@ dmypy.json
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+.idea/
 
 # Gradle
 .idea/**/gradle.xml
