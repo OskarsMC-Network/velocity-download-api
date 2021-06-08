@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, redirect
 from flask_caching import Cache
 
 import data_fetch
@@ -18,6 +18,24 @@ def index():
         latest_release=fetcher.latest_release,
         stable_versions=fetcher.stable_versions,
         error=fetcher.errored
+    )
+
+
+@app.route('/version/<version>/')
+def specific_version_meta(version: str):
+    return redirect(data_fetch.VelocityDownloadFetcher(version, extension=".module").url, 301)
+
+
+@app.route('/version/<version>/download')
+def specific_version_download(version: str):
+    return redirect(data_fetch.VelocityDownloadFetcher(version).url, 301)
+
+
+@app.route("/snapshot-error/")
+def snapshot_error():
+    return jsonify(
+        error=True,
+        message="SNAPSHOT versions are currently not supported."
     )
 
 

@@ -43,3 +43,11 @@ class VelocityVersionFetcher:
             self.errored = False
         else:
             self.errored = True
+
+
+class VelocityDownloadFetcher:
+    def __init__(self, version: str, url: str = 'https://nexus.velocitypowered.com/repository/maven-public/com'
+                                                '/velocitypowered/velocity-native/', extension: str = ".jar"):
+        self.url = url + f"{version}/velocity-native-{version}{extension}"
+        if "-snapshot" in version.lower():
+            self.url = "/snapshot-error/"
