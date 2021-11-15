@@ -1,6 +1,9 @@
 # velocity-download-api
 Web API for velocity downloads written in python.
 
+### Attention:
+Velocity will likely be moving to bibliothek soon, and as such I do not reccomend writing future projects around this API. As soon as velocity moves to bibliothek this repository will be archived.
+
 # API Endpoints
 Base URL: https://velocity-download-api.herokuapp.com/
 <details close>
